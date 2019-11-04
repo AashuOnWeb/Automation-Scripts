@@ -1,0 +1,118 @@
+/*
+        Sample Automation Script using Selenium WebDriver
+*/
+
+
+package MyPackage;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class newtours {
+	public static void main(String args[]){
+		WebDriver driver;
+		
+		System.setProperty("path-to-chromedriver.exe");
+		driver = new ChromeDriver();
+		String baseurl ="http://demo.guru99.com/test/newtours/";
+		
+		String expectedTitle1 = "Welcome: Mercury Tours";
+		String expectedTitle2 = "Register: Mercury Tours";
+		String expectedTitle3 = "Sign-on: Mercury Tours";
+		String expectedTitle4 = "Find a Flight: Mercury Tours";
+		String actualTitle="";
+		driver.get(baseurl);
+		
+		actualTitle = driver.getTitle();
+		
+    //  Title verification
+    
+		if(actualTitle.contentEquals(expectedTitle1)){            
+			System.out.println("Browser opening successfully");
+		}
+		else
+			System.out.println("Browser failed to open");
+		
+    
+		// Register: Navigating to Registration Page
+		
+		driver.findElement(By.xpath("/html/body/div[2]/table/tbody/tr/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td[2]")).click();
+		actualTitle = driver.getTitle();
+		
+    
+    //  Title verification
+    
+		if(actualTitle.contentEquals(expectedTitle2)){
+			System.out.println("Navigating to Registration Page");
+		}
+		else
+			System.out.println("Failed to navigate");
+		
+		driver.findElement(By.name("firstName")).sendKeys("First");
+		driver.findElement(By.name("lastName")).sendKeys("Last");
+		driver.findElement(By.name("phone")).sendKeys("9876543210");
+		driver.findElement(By.name("userName")).sendKeys("sample@gmail.com");
+		driver.findElement(By.name("address1")).sendKeys("Gangapur");
+		driver.findElement(By.name("city")).sendKeys("Nashik");
+		driver.findElement(By.name("state")).sendKeys("Maharashtra");
+		driver.findElement(By.name("postalCode")).sendKeys("422441");
+		driver.findElement(By.name("email")).sendKeys("sample@gmail.com");
+		driver.findElement(By.name("password")).sendKeys("password");
+		driver.findElement(By.name("confirmPassword")).sendKeys("password");
+		driver.findElement(By.name("submit")).click();
+		
+		//Test 2: Sing-In: Navigating to Sign-on Page
+		
+		driver.findElement(By.xpath("/html/body/div[2]/table/tbody/tr/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td[1]")).click();
+		actualTitle = driver.getTitle();
+		
+    
+    //  Title verification
+    
+		if(actualTitle.contentEquals(expectedTitle3)){
+			System.out.println("Navigating to Sign-on Page");
+		}
+		else
+			System.out.println("Failed to navigate");
+
+		driver.findElement(By.name("userName")).sendKeys("sample@gmail.com");
+		driver.findElement(By.name("password")).sendKeys("password");
+		driver.findElement(By.name("submit")).click();
+		
+		
+		//Test 3: Find Flights: Navigating to Find a Flight Page
+		
+		driver.findElement(By.xpath("/html/body/div[2]/table/tbody/tr/td[1]/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr[2]/td[2]/a")).click();
+		actualTitle = driver.getTitle();
+		
+    
+    //  Title verification
+    
+		if(actualTitle.contentEquals(expectedTitle4)){
+			System.out.println("Navigating to Find a Flight Page");
+		}
+		else
+			System.out.println("Failed to navigate");
+		
+		Select drpPass = new Select(driver.findElement(By.name("passCount")));
+		drpPass.selectByVisibleText("2");
+		Select from = new Select(driver.findElement(By.name("fromPort")));
+		from.selectByVisibleText("London");
+
+		Select fmonth = new Select(driver.findElement(By.name("fromMonth")));
+		fmonth.selectByVisibleText("March");
+		Select to = new Select(driver.findElement(By.name("toPort")));
+		to.selectByVisibleText("New York");
+		Select tmonth = new Select(driver.findElement(By.name("toMonth")));
+		tmonth.selectByVisibleText("April");
+		Select pref = new Select(driver.findElement(By.name("airline")));
+		pref.selectByVisibleText("Unified Airlines");
+		driver.findElement(By.name("findFlights")).click();
+		
+	
+		driver.quit();      //Close driver
+	}
+
+}
